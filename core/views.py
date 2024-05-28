@@ -31,6 +31,7 @@ def product_List(request):
     products = Product.objects.all() # select * from Product
     data["products"]=products
     return render(request,"core/products/list.html",data)
+
 # crear un producto
 def product_create(request):
     data = {"title1": "Productos","title2": "Ingreso De Productos"}
@@ -63,7 +64,6 @@ def product_update(request,id):
         data["form"]=form
     return render(request, "core/products/form.html", data)
 
-
 # eliminar un producto
 def product_delete(request,id):
     product = Product.objects.get(pk=id)
@@ -88,4 +88,11 @@ def supplier_List(request):
         "title2": "Consulta De proveedores"
     }
     return render(request,"core/suppliers/list.html",data)
+
+def category_list(request):
+    data = {
+        "title1": "Categoria",
+        "title2": "Consulta De Categoria"
+    }
+    return render(request, "core/categorys/list.html", data)
   
