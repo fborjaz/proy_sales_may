@@ -1,0 +1,33 @@
+/* Variables CSS */
+:root {
+  --primary-color: #0e710e;  /* Verde */
+  --secondary-color: #12c064; /* Verde más claro */
+  --accent-color: #8b1066;    /* Morado */
+  --text-color: #333;         /* Gris oscuro */
+  --background-color: #f8f8f8; /* Gris claro */
+}
+
+/* Estilos generales */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Tipografía */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  color: var(--accent-color);
+}
+
+/* Enlaces */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

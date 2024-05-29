@@ -1,5 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.forms import UserCreationForm
 
 from core.forms import ProductForm
 from core.models import Product

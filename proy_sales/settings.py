@@ -122,6 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'staticfiles' # carpeta fisica de archivos estaticos
+
 STATIC_URL = '/static/' # url de archivos estaticos
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),) #carpeta fisica de archivos estaticos
 MEDIA_ROOT = os.path.join(BASE_DIR,'media') # carpeta fisica de archivos de Imagenes
