@@ -1,6 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 from core.forms import ProductForm
 from core.models import Product
@@ -13,6 +15,28 @@ def home(request):
         "title2":"Super Mercado Economico"
    }
    return render(request,'core/home.html',data)
+
+def signup(request):
+    if request.method == 'GET':
+        return render(request, 'signup.html',{
+            'form': UserCreationForm()
+        })
+    else:
+        if request.POST['password1'] == request.POST['password2']:
+            # Registro de usuario
+            try:
+                user = User.objects.create_user(
+                    request.POST['username'],
+                    password=request.POST['password1']
+                )
+                user.save()
+                return httpResponse('Usuario creado correctamente')
+                return redirect('home')
+            except:
+                return HttpResponse('El usuario ya existe')
+        return HttpResponse('Las contraseñas no coinciden')
+
+
 
   #  return HttpResponse(f"<h1>{data['title2']}<h1>\
   #                        <h2>Le da la Bienvenida  a su selecta clientela</h2>")
