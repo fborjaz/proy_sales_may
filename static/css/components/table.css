@@ -1,24 +1,46 @@
+/* Contenedor de la tabla */
 .table-container {
-  overflow-x: auto; /* Para que la tabla sea scrollable horizontalmente si es necesario */
+  overflow-x: auto;
+  margin-top: 2rem; /* Espacio superior */
 }
 
-table {
+/* Estilos de la tabla */
+.styled-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
-th, td {
-  padding: 0.75rem;
+/* Encabezados */
+.styled-table th {
+  background-color: var(--secondary-color); /* Fondo gris oscuro */
+  color: var(--text-color); /* Texto blanco */
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  font-weight: bold; /* Texto en negrita */
 }
 
-th {
-  background-color: var(--secondary-color);
-  color: white;
+/* Celdas de datos */
+.styled-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--text-secondary-color); /* Línea divisoria gris claro */
+  vertical-align: middle; /* Alinea el contenido verticalmente al centro */
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+/* Filas pares */
+.styled-table tbody tr:nth-child(even) {
+  background-color: var(--primary-color); /* Fondo gris más oscuro para las filas pares */
+}
+
+/* Enlaces en las celdas */
+.styled-table a {
+  color: var(--accent-color); /* Enlaces en verde */
+  margin: 0 0.5rem; /* Espacio entre los enlaces */
+}
+
+/* Imagen del producto */
+.styled-table img {
+  max-width: 50px; /* Ancho máximo de la imagen */
+  height: auto;     /* Ajusta la altura automáticamente */
+  border-radius: 5px; /* Bordes redondeados para la imagen */
 }
