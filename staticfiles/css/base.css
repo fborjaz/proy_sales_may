@@ -1,33 +1,65 @@
-/* Variables CSS */
 :root {
-  --primary-color: #0e710e;  /* Verde */
-  --secondary-color: #12c064; /* Verde más claro */
-  --accent-color: #8b1066;    /* Morado */
-  --text-color: #333;         /* Gris oscuro */
-  --background-color: #f8f8f8; /* Gris claro */
+  --primary-color: #212121;        /* Gris oscuro (fondo principal) */
+  --secondary-color: #333333;     /* Gris medio (fondo secundario) */
+  --accent-color: #12c064;        /* Verde (acentos y enlaces) */
+  --text-color: #f2f2f2;           /* Blanco (texto principal) */
+  --text-secondary-color: #aaaaaa; /* Gris claro (texto secundario) */
+  --title-font: 'Roboto', sans-serif;   /* Fuente para títulos (sans-serif minimalista) */
+  --body-font: 'Roboto', sans-serif;   /* Fuente para texto (sans-serif minimalista) */
 }
 
-/* Estilos generales */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--body-font);
+  line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background-color: var(--primary-color);
   color: var(--text-color);
 }
 
-/* Tipografía */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--title-font);
   margin-top: 0;
-  color: var(--accent-color);
+  color: var(--text-color);
 }
 
-/* Enlaces */
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-secondary-color);
+}
+
 a {
-  color: var(--primary-color);
+  color: var(--accent-color);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: lighten(var(--accent-color), 10%);
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
