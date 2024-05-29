@@ -1,17 +1,19 @@
-<ul class="menu">
-  <li>
-    <a href="{% url 'home' %}"><i class="fas fa-home"></i> Inicio</a>
-  </li>
-  <li>
-    <a href="{% url 'core:product_list' %}"><i class="fas fa-box-open" aria-hidden="true"></i> Productos</a>
-  </li>
-  <li>
-    <a href="{% url 'core:brand_list' %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
-  </li>
-  <li>
-    <a href="{% url 'core:supplier_list' %}"><i class="fas fa-truck" aria-hidden="true"></i> Proveedores</a>
-  </li>
-  <li>
-    <a href="{% url 'core:category_list' %}"><i class="fas fa-list" aria-hidden="true"></i> Categorías</a>
-  </li>
-</ul>
+<nav aria-label="Menú principal">
+    <ul class="menu" role="menubar">
+        <li role="none" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <a href="{% url 'home' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'home' %}page{% endif %}"><i class="fas fa-home"></i> Inicio</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'core:product-list' %}active{% endif %}">
+            <a href="{% url 'core:product-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:product-list' %}page{% endif %}"><i class="fas fa-box-open" aria-hidden="true"></i> Productos</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'core:brand-list' %}active{% endif %}">
+            <a href="{% url 'core:brand-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:brand-list' %}page{% endif %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'core:supplier-list' %}active{% endif %}">
+            <a href="{% url 'core:supplier-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:supplier-list' %}page{% endif %}"><i class="fas fa-truck" aria-hidden="true"></i> Proveedores</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'core:category-list' %}active{% endif %}">
+            <a href="{% url 'core:category-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:category-list' %}page{% endif %}"><i class="fas fa-list" aria-hidden="true"></i> Categorías</a>
+        </li>
+    </ul>
+</nav>

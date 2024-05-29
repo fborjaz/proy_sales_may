@@ -16,3 +16,8 @@ nav {
   display: flex;
   align-items: center;
 }
+
+.logo i {
+  color: var(--accent-color);
+  margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+}

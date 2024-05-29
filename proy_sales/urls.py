@@ -14,17 +14,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls.static import static
-
+from django.conf import settings  # Importa la configuración del proyecto
+from django.conf.urls.static import static  # Importa la función para servir archivos estáticos en desarrollo
 from django.contrib import admin
-from django.urls import path,include
-from core import views
+from django.urls import path, include
+from core import views  # Importa las vistas de tu app 'core'
 
 urlpatterns = [
+    # URLs de la aplicación de administración de Django
     path('admin/', admin.site.urls),
-    path('',views.home,name='home'),
-    path('signup/', views.signup, name='signup'),
-    path('', include('core.urls',namespace='core')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # URLs de la aplicación principal (core)
+    path('', views.home, name='home'),  # URL de la página de inicio
+    path('signup/', views.signup, name='signup'),  # URL de registro de usuario
+    path('login/', views.CustomLoginView.as_view(), name='login'),  # URL de inicio de sesión
+
+    # Incluye las URLs de la aplicación 'core' en un espacio de nombres llamado 'core'
+    path('', include('core.urls', namespace='core')),
+]
+
+# Sirve archivos estáticos (CSS, JavaScript, Imágenes) en modo DEBUG (desarrollo)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
