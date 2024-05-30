@@ -70,7 +70,7 @@
 *🤝 Contribuciones*
 ¡Las contribuciones son bienvenidas! Si encuentras algún error o quieres agregar nuevas funcionalidades, no dudes en abrir un issue o enviar un pull request. 🙌
 
-
+#
 **Copyright**
 © 2024 [Frank Borja](https://frankborja.github.io/Curriculum-Vitae/). Todos los derechos reservados.
 
