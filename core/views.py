@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -138,7 +139,7 @@ def signup(request):
                     request.POST["username"], password=request.POST["password1"])
                 user.save()
                 login(request, user)
-                return redirect('core:product_list')
+                return redirect('home')
             except IntegrityError:
                 messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
