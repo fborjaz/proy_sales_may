@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from rest_framework import viewsets, permissions
 from rest_framework.authentication import SessionAuthentication
+from django.contrib.auth.views import LoginView, LogoutView
 
 from core.forms import ProductForm
 from core.models import Product, Brand, Supplier, Category
@@ -164,10 +165,23 @@ def signup(request):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-    success_url = '/'
+
+    def form_valid(self, form):
+        messages.success(self.request, '¡Bienvenido!')
+        return super().form_valid(form)
 
     def get_success_url(self):
         if self.request.user.is_staff:
             return '/admin/'
         else:
             return '/'
+
+class CustomLogoutView(LogoutView):
+    template_name = 'base.html'
+
+    def get_next_page(self):
+        return reverse('home')
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, '¡Hasta pronto!')
+        return super().dispatch(request, *args, **kwargs)

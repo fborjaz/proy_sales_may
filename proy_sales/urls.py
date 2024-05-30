@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from core import views
+from core.views import home, signup, CustomLoginView, CustomLogoutView # Importa las vistas de la aplicación core
 
 urlpatterns = [
     # URLs de la aplicación de administración de Django
@@ -29,9 +30,10 @@ urlpatterns = [
     path('', views.home, name='home'),  # URL de la página de inicio
     path('signup/', views.signup, name='signup'),
     path('login/', views.CustomLoginView.as_view(), name='login'),  # URL de inicio de sesión
+    path('logout/', CustomLogoutView.as_view(), name='logout'), # URL de cierre de sesión
 
     # Incluye las URLs de la aplicación 'core' en un espacio de nombres llamado 'core'
-    path('', include('core.urls', namespace='core')),
+    path('core/', include('core.urls')),
 ]
 
 # Sirve archivos estáticos (CSS, JavaScript, Imágenes) en modo DEBUG (desarrollo)

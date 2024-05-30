@@ -4,9 +4,8 @@
     <p style="color: red;">{{ error }}</p>
 {% endif %}
 
-<form action="/signup/" method="POST">
+<form method="POST" action="{% url 'signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
-
     <button type="submit">Signup</button>
 </form>

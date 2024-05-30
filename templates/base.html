@@ -13,12 +13,13 @@
   <link rel="stylesheet" href={% static 'css/components/table.css' %}>
   <link rel="stylesheet" href={% static 'css/components/button.css' %}>
   <link rel="stylesheet" href={% static 'css/components/form.css' %}>
+  <link rel="stylesheet" href={% static 'css/components/modal.css' %}>
   <link rel="stylesheet" href={% static 'css/components/footer.css' %}>
   <!-- Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Favicon -->
-  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-  <title>{% block title %}{% endblock title %} - Home</title>
+  <link rel="icon" href="{% static 'images/favicon-001.png' %}" type="image/x-icon">
+  <title>{% block title %}{% endblock title %} Home</title>
 </head>
 <body>
 
@@ -27,9 +28,11 @@
   </header>
 
   <main id="content">
-    {% block content %}
-    {% endblock content %}
-  </main>
+    <div id="main-content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</main>
 
   <footer id="footer">
     {% include 'partials/footer.html' %}
