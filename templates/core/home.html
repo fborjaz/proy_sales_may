@@ -1,7 +1,45 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
 
+{% block content %}
 <div class="container">
-  <h1>Home</h1>
-</div>
+  {% if user.is_authenticated %}
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Super Mercado Económico</h1>
+            <p>Tu mejor opción para encontrar productos frescos, de calidad y a precios accesibles.</p>
+            <a href="{% url 'core:product_list' %}" class="btn btn-primary">Ver Productos</a>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'media/products/coca_cola.jfif' %}" alt="Imagen de productos frescos">
+        </div>
+    </section>
 
-{% endblock %}
+    <section class="featured-products">
+        <h2>Productos Destacados</h2>
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>${{ product.price }}</p>
+                    <a href="{% url 'core:product_detail' product.pk %}" class="btn btn-secondary">Ver Detalles</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="about-us">
+        <h2>Sobre Nosotros</h2>
+        <p>Somos un supermercado comprometido con ofrecer productos de calidad a precios justos. Nuestra misión es ser la primera opción para las familias ecuatorianas que buscan ahorrar sin sacrificar la calidad.</p>
+        <p>Visítanos en nuestra tienda ubicada en [Dirección de tu supermercado].</p>
+        <p>Horario de atención: [Horario de atención del supermercado]</p>
+    </section>
+  {% else %}
+    <section class="welcome">
+        <h2>¡Bienvenido a Super Mercado Económico!</h2>
+        <p>Por favor, inicia sesión o regístrate para acceder a nuestros productos y servicios.</p>
+    </section>
+  {% endif %}
+</div>
+{% endblock content %}

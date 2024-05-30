@@ -37,3 +37,9 @@
   padding: 1rem 2rem;
   font-size: 1.1rem;
 }
+
+/* Estilos para botones con iconos */
+.btn i {
+  margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+}
+

@@ -3,11 +3,21 @@
   color: white;
   padding: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
 .logo {
   font-size: 1.5em;
   font-weight: bold;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+.logo i {
+  color: var(--accent-color);
+  margin-right: 0.5rem; /* Espacio entre el icono y el texto */
 }
