@@ -65,9 +65,9 @@
     Accede a http://127.0.0.1:8000/admin/ y utiliza las credenciales del superusuario que creaste en el paso 5.
     ```
    
-9. **Explora y disfruta de Super Mercado Económico!** 🎉
+## Explora y disfruta de Super Mercado Económico!** 🎉
 
-**🤝 Contribuciones**
+*🤝 Contribuciones*
 ¡Las contribuciones son bienvenidas! Si encuentras algún error o quieres agregar nuevas funcionalidades, no dudes en abrir un issue o enviar un pull request. 🙌
 
 
