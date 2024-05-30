@@ -1,7 +1,7 @@
 from django.urls import path
 from core import views
 
-from core.views import CustomLogoutView
+from django.contrib.auth.views import LogoutView
 
 app_name = 'core'
 
@@ -20,8 +20,6 @@ urlpatterns = [
 
     # URLs de categorías
     path('category_list/', views.category_list, name='category_list'),
-
-    # Cerrado de sesión
-    path('logout/', CustomLogoutView.as_view(), name='logout'),
-
+  # Cerrado de sesión
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 ]

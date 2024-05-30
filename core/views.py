@@ -1,18 +1,13 @@
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.urls import reverse
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from rest_framework import viewsets, permissions
-from rest_framework.authentication import SessionAuthentication
-from django.contrib.auth.views import LoginView, LogoutView
 
-from core.forms import ProductForm
-from core.models import Product, Brand, Supplier, Category
-from core.serializers import ProductSerializer, BrandSerializer, SupplierSerializer, CategorySerializer
+from .forms import ProductForm
+from .models import Product, Brand, Supplier, Category
 
 # ------------------------------------------------------------------------------
 # Vistas Generales
@@ -25,26 +20,11 @@ def home(request):
     }
     return render(request, 'core/home.html', data)
 
-# ------------------------------------------------------------------------------
-# ViewSets
-# ------------------------------------------------------------------------------
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
-
-class BrandViewSet(viewsets.ModelViewSet):
-    queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
-
-class SupplierViewSet(viewsets.ModelViewSet):
-    queryset = Supplier.objects.all()
-    serializer_class = SupplierSerializer
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+@login_required
+def signout(request):
+    logout(request)
+    messages.success(request, 'Has cerrado sesión exitosamente.')
+    return redirect('home')
 
 # ------------------------------------------------------------------------------
 # Vistas de Productos
@@ -101,7 +81,6 @@ def product_delete(request, id):
 
     return render(request, "core/products/delete.html", data)
 
-
 # ------------------------------------------------------------------------------
 # Vistas de Marcas
 # ------------------------------------------------------------------------------
@@ -155,33 +134,39 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
-                return redirect(reverse('login'))
+                user = User.objects.create_user(
+                    request.POST["username"], password=request.POST["password1"])
+                user.save()
+                login(request, user)
+                return redirect('core:product_list')
             except IntegrityError:
                 messages.error(request, 'El nombre de usuario ya está en uso.')
+        else:
+            messages.error(request, 'Error al procesar el formulario.')
+        return render(request, 'signup.html', {"form": form})
+
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {"form": form})
 
-class CustomLoginView(LoginView):
-    template_name = 'login.html'
+def signin(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'Usuario o contraseña incorrectos.')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
 
-    def form_valid(self, form):
-        messages.success(self.request, '¡Bienvenido!')
-        return super().form_valid(form)
 
-    def get_success_url(self):
-        if self.request.user.is_staff:
-            return '/admin/'
-        else:
-            return '/'
-
-class CustomLogoutView(LogoutView):
-    template_name = 'base.html'
-
-    def get_next_page(self):
-        return reverse('home')
-
-    def dispatch(self, request, *args, **kwargs):
-        messages.success(request, '¡Hasta pronto!')
-        return super().dispatch(request, *args, **kwargs)
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'Has cerrado sesión exitosamente.')
+    return redirect('home')
