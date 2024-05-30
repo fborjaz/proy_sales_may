@@ -28,10 +28,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # URLs de la aplicación principal (core)
-    path('signup/', views.signup, name='signup'),
-    path('signin/', views.signin, name='signin'),
-    path('logout/', views.signout, name='logout'),
-    path('', views.home, name='home'),
+    path('signup/', views.signup, name='signup'), # URL para el registro de usuarios
+    path('signin/', views.AppLoginView.as_view(), name='signin'), # URL para el inicio de sesión
+    path('admin/login/', views.AdminLoginView.as_view(), name='admin_login'),  # Login del admin
+    path('logout/', views.signout, name='logout'), # URL para cerrar sesión
+    path('', views.home, name='home'), # URL para la página de inicio
+
+    # URL para la página de perfil
+    path('accounts/profile/', views.profile, name='profile'), # URL para la página de perfil
 
     # Incluye las URLs de la aplicación 'core' en un espacio de nombres llamado 'core'
     path('core/', include('core.urls', namespace='core')),

@@ -2,13 +2,16 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import UserEditForm,PasswordEditlForm
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
 
-from .forms import ProductForm
-from .models import Product, Brand, Supplier, Category
+from core.forms import ProductForm
+from core.models import Product, Brand, Supplier, Category
 
 # ------------------------------------------------------------------------------
 # Vistas Generales
@@ -150,7 +153,17 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {"form": form})
 
+# Vista de inicio de sesión para la aplicación
+class AppLoginView(LoginView):
+    template_name = 'signin.html'
+    success_url = reverse_lazy('home')
+
+# Vista de inicio de sesión para el panel de administración
+class AdminLoginView(LoginView):
+    template_name = 'admin/login.html'  # Utiliza la plantilla por defecto de Django admin
+
 def signin(request):
+    data = {"title1": "Productos", "title2": "Ingreso De"}
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -164,10 +177,33 @@ def signin(request):
                 messages.error(request, 'Usuario o contraseña incorrectos.')
     else:
         form = AuthenticationForm()
-    return render(request, 'signin.html', {'form': form})
+    return render(request, 'signin.html',{'form': form},data)
 
 
 def logout_view(request):
     logout(request)
     messages.success(request, 'Has cerrado sesión exitosamente.')
     return redirect('home')
+
+# ------------------------------------------------------------------------------
+# Vistas de Perfil
+# ------------------------------------------------------------------------------
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        password_form = PasswordEditlForm(request.user, request.POST)
+        if user_form.is_valid() and password_form.is_valid():
+            user_form.save()
+            password_form.save()
+            messages.success(request, 'Perfil actualizado exitosamente.')
+            return redirect('profile')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        password_form = PasswordEditlForm(request.user)
+    context = {
+        'user_form': user_form,
+        'password_form':password_form,
+    }
+    return render(request, 'profile.html', context)

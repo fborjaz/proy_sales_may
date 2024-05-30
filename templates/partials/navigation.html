@@ -19,6 +19,9 @@
       <li role="none" class="{% if request.resolver_match.url_name == 'category_list' %}active{% endif %}">
         <a href="{% url 'core:category_list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'category_list' %}page{% endif %}"><i class="fas fa-list" aria-hidden="true"></i> Categorías</a>
       </li>
+      <li role="none" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+        <a href="{% url 'profile' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'profile' %}page{% endif %}"><i class="fas fa-user"></i> Mi perfil</a>
+      </li>
       <li role="none" class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">
           <a href="{% url 'logout' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'logout' %}page{% endif %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
       </li>
