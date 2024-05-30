@@ -104,7 +104,7 @@ La interfaz de usuario está diseñada con un estilo minimalista y una paleta de
     ├── orm.py
     ├── README.md
     ├── requirements.txt
-    ```
+   ```
 
 ## ⚙️ Cómo Ejecutar la Aplicación
 
