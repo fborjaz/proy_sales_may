@@ -43,6 +43,7 @@
 .menu .active a {
   position: relative; /* Para posicionar la línea debajo */
   color: var(--accent-color);
+  color: white;
 }
 
 .menu .active a::after {

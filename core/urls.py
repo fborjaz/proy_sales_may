@@ -1,16 +1,21 @@
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 from core import views
 
-app_name = 'core'  # Define el nombre de la aplicación 'core'
-
-router = routers.DefaultRouter()
-router.register(r'products', views.ProductViewSet, basename='product')
-router.register(r'brands', views.BrandViewSet, basename='brand')
-router.register(r'suppliers', views.SupplierViewSet, basename='supplier')
-router.register(r'categories', views.CategoryViewSet, basename='category')
+app_name = 'core'
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Asegúrate de tener la función home definida
-    path('', include(router.urls)),
+    # URLs de productos
+    path('product_list/', views.product_list, name='product_list'),
+    path('product_create/', views.product_create, name='product_create'),
+    path('product_update/<int:id>/', views.product_update, name='product_update'),
+    path('product_delete/<int:id>/', views.product_delete, name='product_delete'),
+
+    # URLs de marcas
+    path('brand_list/', views.brand_list, name='brand_list'),
+
+    # URLs de proveedores
+    path('supplier_list/', views.supplier_list, name='supplier_list'),
+
+    # URLs de categorías
+    path('category_list/', views.category_list, name='category_list'),
 ]

@@ -1,19 +1,22 @@
+{% load static %}
+{% with current_url=request.resolver_match.url_name %}
 <nav aria-label="Menú principal">
-    <ul class="menu" role="menubar">
-        <li role="none" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <a href="{% url 'home' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'home' %}page{% endif %}"><i class="fas fa-home"></i> Inicio</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'core:product-list' %}active{% endif %}">
-            <a href="{% url 'core:product-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:product-list' %}page{% endif %}"><i class="fas fa-box-open" aria-hidden="true"></i> Productos</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'core:brand-list' %}active{% endif %}">
-            <a href="{% url 'core:brand-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:brand-list' %}page{% endif %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'core:supplier-list' %}active{% endif %}">
-            <a href="{% url 'core:supplier-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:supplier-list' %}page{% endif %}"><i class="fas fa-truck" aria-hidden="true"></i> Proveedores</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'core:category-list' %}active{% endif %}">
-            <a href="{% url 'core:category-list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'core:category-list' %}page{% endif %}"><i class="fas fa-list" aria-hidden="true"></i> Categorías</a>
-        </li>
-    </ul>
+  <ul class="menu" role="menubar">
+    <li role="none" class="{% if current_url == 'home' %}active{% endif %}">
+      <a href="{% url 'home' %}" role="menuitem" aria-current="{% if current_url == 'home' %}page{% endif %}"><i class="fas fa-home"></i> Inicio</a>
+    </li>
+    <li role="none" class="{% if current_url == 'core:product_list' %}active{% endif %}">
+      <a href="{% url 'core:product_list' %}" role="menuitem" aria-current="{% if current_url == 'core:product_list' %}page{% endif %}"><i class="fas fa-box-open" aria-hidden="true"></i> Productos</a>
+    </li>
+    <li role="none" class="{% if current_url == 'core:brand_list' %}active{% endif %}">
+      <a href="{% url 'core:brand_list' %}" role="menuitem" aria-current="{% if current_url == 'core:brand_list' %}page{% endif %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
+    </li>
+    <li role="none" class="{% if current_url == 'core:supplier_list' %}active{% endif %}">
+      <a href="{% url 'core:supplier_list' %}" role="menuitem" aria-current="{% if current_url == 'core:supplier_list' %}page{% endif %}"><i class="fas fa-truck" aria-hidden="true"></i> Proveedores</a>
+    </li>
+    <li role="none" class="{% if current_url == 'core:category_list' %}active{% endif %}">
+      <a href="{% url 'core:category_list' %}" role="menuitem" aria-current="{% if current_url == 'core:category_list' %}page{% endif %}"><i class="fas fa-list" aria-hidden="true"></i> Categorías</a>
+    </li>
+  </ul>
 </nav>
+{% endwith %}
