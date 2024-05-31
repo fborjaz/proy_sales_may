@@ -50,6 +50,8 @@ def product_create(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
+            product = form.save(commit=False)  # Crea el producto pero no lo guarda aún
+            product.user = request.user  # Asigna el usuario actual al producto
             form.save()
             messages.success(request, 'Producto creado exitosamente')
             return redirect('core:product_list')
