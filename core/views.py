@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.urls import reverse
@@ -158,35 +158,45 @@ def supplier_List(request):
     data['suppliers'] = suppliers
     return render(request, 'core/suppliers/list.html', data)
 
+@login_required
 def supplier_create(request):
-    data = {'title1': 'Proveedores','title2': 'Ingreso de proveedores'}
+    data = {"title1": "Proveedores", "title2": "Ingreso De Proveedores"}
 
-    if request.method == 'POST':
-        form = SupplierForm(request.POST, request.FILES)
+    if request.method == "POST":
+        form = SupplierForm(request.POST)
         if form.is_valid():
             supplier = form.save(commit=False)
-            supplier.user = request.user
+            supplier.user = request.user  # Asigna el usuario actual
             supplier.save()
-            return redirect('core:supplier_list')
-    else:
-        data['form'] = SupplierForm() # controles formulario sin datos
+            messages.success(request, 'Proveedor actualizado exitosamente')
+            return redirect('core:supplier_list')  # Redirige después de guardar
+        else:
+            # Si el formulario no es válido, muestra los errores en la plantilla
+            messages.error(request, 'Error al crear el proveedor. Verifica los datos ingresados.')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Error en el campo {field}: {error}')
 
-    return render(request, 'core/suppliers/form.html', data)
+    else:  # Si es una solicitud GET, muestra el formulario vacío
+        form = SupplierForm()
+
+    data["form"] = form
+    return render(request, "core/suppliers/form.html", data)
 
 @login_required
 def supplier_update(request, id):
-    data = {'title1': 'Proveedores','title2': 'Edición de proveedores'}
-    supplier = Supplier.objects.get(pk=id)
-    if request.method == 'POST':
-        form = SupplierForm(request.POST, request.FILES, instance=supplier)
+    data = {"title1": "Proveedores", "title2": "Edición De Proveedores"}
+    supplier = get_object_or_404(Supplier, pk=id)
+    if request.method == "POST":
+        form = SupplierForm(request.POST, instance=supplier)
         if form.is_valid():
             form.save()
-            return redirect('core:supplier_list')
+            messages.success(request, 'Proveedor actualizado exitosamente')
+            return redirect("core:supplier_list")  # Redirigir después de guardar
     else:
         form = SupplierForm(instance=supplier)
-        data['form'] = form
-
-    return render(request, 'core/suppliers/form.html', data)
+        data["form"] = form
+    return render(request, "core/suppliers/form.html", data)
 
 @login_required
 def supplier_delete(request, id):

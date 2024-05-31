@@ -44,3 +44,8 @@
   height: auto;     /* Ajusta la altura automáticamente */
   border-radius: 5px; /* Bordes redondeados para la imagen */
 }
+
+/* Estilos para las celdas de acciones */
+.styled-table td:last-child {
+  text-align: center;
+}

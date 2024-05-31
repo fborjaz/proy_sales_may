@@ -1,23 +1,37 @@
 {% extends 'base.html' %}
-{% block content %}
- <div class="container">
-  <div class="form-container">
-    <h2 class="title">{{title2}}</h2>
+{% load static %}
 
-    <form method="post" enctype="multipart/form-data" >
-        {% csrf_token %}
-        {% comment %} {{ form.as_p }} {% endcomment %}
-        {% for field in form %}
-        <div class="form-group">
+{% block content %}
+<div class="container">
+  <div class="form-container">
+    <h2 class="title">{{ title2 }}</h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <div class="errorlist">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
+            {% if field.errors %}
+                <div class="errorlist">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
         </div>
-        {% endfor %}
-        <div class="form-group">
-            <input type="submit" value="Guardar" class="btn blue">
-            <a href={% url 'core:supplier_list' %} class="btn red"> Cancelar </a>
-        </div>
+      {% endfor %}
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'core:supplier_list' %}" class="btn btn-secondary">Cancelar</a>
+      </div>
     </form>
+  </div>
 </div>
-</div>
-{% endblock content  %}
+{% endblock content %}

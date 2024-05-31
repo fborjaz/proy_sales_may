@@ -58,9 +58,22 @@ button[type="submit"]:hover {
 
 /* Estilos para errores de validación */
 .errorlist {
-  color: red;
-  font-size: 0.8rem;
-  list-style: none;
+  color: var(--error-color);         /* Color de error (rojo o similar) */
+  font-size: 0.9rem;
+  list-style: none;                 /* Elimina los puntos de la lista */
   margin: 0.5rem 0;
   padding: 0;
 }
+
+/* Estilos para cada mensaje de error */
+.errorlist li {
+  margin-bottom: 0.3rem;
+}
+
+/* Estilos para el campo con error */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: var(--error-color);  /* Resalta el borde del campo en rojo */
+}
+

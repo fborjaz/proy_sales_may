@@ -4,6 +4,7 @@
   --accent-color: #12c064;        /* Verde (acentos y enlaces) */
   --text-color: #f2f2f2;           /* Blanco (texto principal) */
   --text-secondary-color: #aaaaaa; /* Gris claro (texto secundario) */
+  --error-color: #dc3545;         /* Rojo (mensajes de error) */ /* Nueva variable */
   --title-font: 'Roboto', sans-serif;   /* Fuente para títulos (sans-serif minimalista) */
   --body-font: 'Roboto', sans-serif;   /* Fuente para texto (sans-serif minimalista) */
 }
