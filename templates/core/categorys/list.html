@@ -1,5 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-  {{title2}}
-  <h2>Estoy en Categoria</h2>
-{% endblock content  %}
+  <div class="table-container">
+    <br>
+    <h1 class="title">{{ title2 }}</h1>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if categories %} <div class="table-container">
+  <br>
+  <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in categories %}
+          <tr>
+            <td>{{ category.description }}</td>
+            <td>
+              {% if category.state %}
+                ✔
+              {% else %}
+                ➖
+              {% endif %}
+            </td>
+            <td>
+              <a href="{% url 'core:category_update' category.pk %}">✏️</a>
+              <a href="{% url 'core:category_delete' category.pk %}">❌</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+  {% else %}
+    <h2 style="display: flex; justify-content: center; color: crimson;">No hay categorías</h2>
+  {% endif %}
+
+  <div class="form-group">
+    <a class="btn blue" href="{% url 'core:category_create' %}"><i class="fas fa-plus"></i> Nueva Categoría</a>
+  </div>
+
+</div>
+
+
+{% endblock content %}

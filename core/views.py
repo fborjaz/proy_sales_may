@@ -216,12 +216,52 @@ def supplier_delete(request, id):
 @login_required
 def category_list(request):
     data = {
-        "title1": "Categoria",
-        "title2": "Consulta De Categoria"
+        "title1": "Categorias",
+        "title2": "Consulta De Categorias"
     }
-    categories = Category.objects.all()
+    categories = Category.objects.filter(user = request.user)
     data["categories"] = categories
-    return render(request, "core/categorys/list.html", data)
+    return render(request, 'core/categorys/list.html', data)
+
+@login_required
+def category_create(request):
+    data = {"title1": "Categoria", "title2": "Ingreso De Categorias"}
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.user = request.user
+            category.save()
+            return redirect('core:category_list')
+    else:
+        data['form'] = CategoryForm
+
+    return render(request, 'core/categorys/form.html', data)
+
+@login_required
+def category_update(request, id):
+    data = {"title1": "Categorias", "title2": "Edicion De Categorias"}
+    category = Category.objects.get(pk=id)
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect("core:category_list")
+    else:
+        form = CategoryForm(instance=category)
+        data["form"] = form
+    return render(request, "core/categorys/form.html", data)
+
+@login_required
+def category_delete(request, id):
+    category = Category.objects.get(pk=id)
+    data = {"title1": "Eliminar", "title2": "Eliminar Una Categoria", "category": category}
+    if request.method == "POST":
+        category.delete()
+        return redirect("core:category_list")
+
+    return render(request, "core/categorys/delete.html", data)
 
 
 # ------------------------------------------------------------------------------

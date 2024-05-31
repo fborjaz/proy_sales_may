@@ -26,6 +26,9 @@ urlpatterns = [
 
     # URLs de categorías
     path('category_list/', views.category_list, name='category_list'),
+    path('category_create/', views.category_create, name='category_create'),
+    path('category_update/<int:id>/', views.category_update, name='category_update'),
+    path('category_delete/<int:id>/', views.category_delete, name='category_delete'),
   # Cerrado de sesión
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 ]
