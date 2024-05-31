@@ -93,15 +93,16 @@ def product_delete(request, id):
 # ------------------------------------------------------------------------------
 
 @login_required
-def brand_List(request):
+def brand_list(request):
     data = {
         'title1': 'Marcas',
         'title2': 'Consulta de marcas'
     }
-    brands = Brand.objects.filter(user=request.user) # select * from brand
+    brands = Brand.objects.filter(user = request.user)
     data['brands'] = brands
     return render(request, 'core/brands/list.html', data)
 
+#crear una marca
 @login_required
 def brand_create(request):
     data = {'title1': 'Marcas','title2': 'Ingreso de marcas'}
@@ -114,7 +115,7 @@ def brand_create(request):
             brand.save()
             return redirect('core:brand_list')
     else:
-        data['form'] = BrandForm() # controles formulario sin datos
+        data['form'] = BrandForm()
 
     return render(request, 'core/brands/form.html', data)
 

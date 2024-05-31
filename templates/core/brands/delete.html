@@ -6,7 +6,7 @@
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn red">Eliminar</button>
-            <a class="btn blue" href="{% url 'core:brands_list' %}">Cancelar</a>
+            <a class="btn blue" href="{% url 'core:brand_list' %}">Cancelar</a>
         </form>
     </div>
 {% endblock content %}

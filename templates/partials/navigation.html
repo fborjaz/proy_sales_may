@@ -11,7 +11,7 @@
         <a href="{% url 'core:product_list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'product_list' %}page{% endif %}"><i class="fas fa-box-open" aria-hidden="true"></i> Productos</a>
       </li>
       <li role="none" class="{% if request.resolver_match.url_name == 'brand_list' %}active{% endif %}">
-        <a href="{% url 'core:brands_list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'brand_list' %}page{% endif %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
+        <a href="{% url 'core:brand_list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'brand_list' %}page{% endif %}"><i class="fas fa-tags" aria-hidden="true"></i> Marcas</a>
       </li>
       <li role="none" class="{% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}">
         <a href="{% url 'core:supplier_list' %}" role="menuitem" aria-current="{% if request.resolver_match.url_name == 'supplier_list' %}page{% endif %}"><i class="fas fa-truck" aria-hidden="true"></i> Proveedores</a>
