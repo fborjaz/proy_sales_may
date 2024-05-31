@@ -7,10 +7,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import UserEditForm,PasswordEditlForm
+from .forms import BrandForm
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 
-from core.forms import ProductForm
+from core.forms import ProductForm, CategoryForm, BrandForm, SupplierForm
 from core.models import Product, Brand, Supplier, Category
 
 # ------------------------------------------------------------------------------
@@ -92,14 +93,55 @@ def product_delete(request, id):
 # ------------------------------------------------------------------------------
 
 @login_required
-def brand_list(request):
+def brand_List(request):
     data = {
-        "title1": "Marcas",
-        "title2": "Consulta De Marcas De Productos"
+        'title1': 'Marcas',
+        'title2': 'Consulta de marcas'
     }
-    brands = Brand.objects.all()
-    data["brands"] = brands
-    return render(request, "core/brands/list.html", data)
+    brands = Brand.objects.filter(user=request.user) # select * from brand
+    data['brands'] = brands
+    return render(request, 'core/brands/list.html', data)
+
+@login_required
+def brand_create(request):
+    data = {'title1': 'Marcas','title2': 'Ingreso de marcas'}
+
+    if request.method == 'POST':
+        form = BrandForm(request.POST)
+        if form.is_valid():
+            brand = form.save(commit=False)
+            brand.user = request.user
+            brand.save()
+            return redirect('core:brand_list')
+    else:
+        data['form'] = BrandForm() # controles formulario sin datos
+
+    return render(request, 'core/brands/form.html', data)
+
+@login_required
+def brand_update(request, id):
+    data = {'title1': 'Marcas','title2': 'Edición de marcas'}
+    brand = Brand.objects.get(pk=id)
+    if request.method == 'POST':
+        form = BrandForm(request.POST, instance=brand)
+        if form.is_valid():
+            form.save()
+            return redirect('core:brand_list')
+    else:
+        form = BrandForm(instance=brand)
+        data['form'] = form
+
+    return render(request, 'core/brands/form.html', data)
+
+@login_required
+def brand_delete(request, id):
+    brand = Brand.objects.get(pk=id)
+    data = {'title1': 'Marcas','title2': 'Eliminar una marca','brand': brand}
+    if request.method == 'POST':
+        brand.delete()
+        return redirect('core:brand_list')
+
+    return render(request, 'core/brands/delete.html', data)
 
 # ------------------------------------------------------------------------------
 # Vistas de Proveedores

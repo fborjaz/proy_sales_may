@@ -13,7 +13,10 @@ urlpatterns = [
     path('product_delete/<int:id>/', views.product_delete, name='product_delete'),
 
     # URLs de marcas
-    path('brand_list/', views.brand_list, name='brand_list'),
+    path('brands_list/', views.brand_List, name='brands_list'),
+    path('brand_create/', views.brand_create, name='brand_create'),
+    path('brand_update/<int:id>/', views.brand_update, name='brand_update'),
+    path('brand_delete/<int:id>/', views.brand_delete, name='brand_delete'),
 
     # URLs de proveedores
     path('supplier_list/', views.supplier_list, name='supplier_list'),

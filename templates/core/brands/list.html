@@ -1,5 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-  {{title2}}
-  <h2>Estoy en marcas</h2>
-{% endblock content  %}
+<div class="table-container">
+  <br>
+  <h1 class="title">{{ title2 }}</h1>
+  {% if brands %}
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for brand in brands %}
+        <tr>
+          <td>{{ brand.description }}</td>
+          <td>
+            {% if brand.state %}
+              ✔ {% else %}
+              ➖ {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'core:brand_update' brand.pk %}">✏️</a>
+            <a href="{% url 'core:brand_delete' brand.pk %}">❌</a>  </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h2 style="display: flex; justify-content: center; color: crimson;">No hay marcas</h2>
+  {% endif %}
+  <div class="form-group">
+    <a class="btn blue" href="{% url 'core:brand_create' %}"><i class="fas fa-plus"></i>Nueva Marca</a> </div>
+</div>
+{% endblock content %}
