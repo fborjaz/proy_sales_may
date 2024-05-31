@@ -19,7 +19,10 @@ urlpatterns = [
     path('brand_delete/<int:id>/', views.brand_delete, name='brand_delete'),
 
     # URLs de proveedores
-    path('supplier_list/', views.supplier_list, name='supplier_list'),
+    path('supplier_list/', views.supplier_List, name='supplier_list'),
+    path('supplier_create/', views.supplier_create, name='supplier_create'),
+    path('supplier_update/<int:id>/', views.supplier_update, name='supplier_update'),
+    path('supplier_delete/<int:id>/', views.supplier_delete, name='supplier_delete'),
 
     # URLs de categorías
     path('category_list/', views.category_list, name='category_list'),

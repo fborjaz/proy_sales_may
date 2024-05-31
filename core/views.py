@@ -148,14 +148,54 @@ def brand_delete(request, id):
 # ------------------------------------------------------------------------------
 
 @login_required
-def supplier_list(request):
+def supplier_List(request):
     data = {
-        "title1": "Proveedores",
-        "title2": "Consulta De proveedores"
+        'title1': 'Proveedores',
+        'title2': 'Consulta de proveedores'
     }
-    suppliers = Supplier.objects.all()
-    data["suppliers"] = suppliers
-    return render(request, "core/suppliers/list.html", data)
+    suppliers = Supplier.objects.filter(user = request.user) # select * from supplier
+    data['suppliers'] = suppliers
+    return render(request, 'core/suppliers/list.html', data)
+
+def supplier_create(request):
+    data = {'title1': 'Proveedores','title2': 'Ingreso de proveedores'}
+
+    if request.method == 'POST':
+        form = SupplierForm(request.POST, request.FILES)
+        if form.is_valid():
+            supplier = form.save(commit=False)
+            supplier.user = request.user
+            supplier.save()
+            return redirect('core:supplier_list')
+    else:
+        data['form'] = SupplierForm() # controles formulario sin datos
+
+    return render(request, 'core/suppliers/form.html', data)
+
+@login_required
+def supplier_update(request, id):
+    data = {'title1': 'Proveedores','title2': 'Edición de proveedores'}
+    supplier = Supplier.objects.get(pk=id)
+    if request.method == 'POST':
+        form = SupplierForm(request.POST, request.FILES, instance=supplier)
+        if form.is_valid():
+            form.save()
+            return redirect('core:supplier_list')
+    else:
+        form = SupplierForm(instance=supplier)
+        data['form'] = form
+
+    return render(request, 'core/suppliers/form.html', data)
+
+@login_required
+def supplier_delete(request, id):
+    supplier = Supplier.objects.get(pk=id)
+    data = {'title1': 'Proveedores','title2': 'Eliminar un proveedor','supplier': supplier}
+    if request.method == 'POST':
+        supplier.delete()
+        return redirect('core:supplier_list')
+
+    return render(request, 'core/suppliers/delete.html', data)
 
 
 # ------------------------------------------------------------------------------
