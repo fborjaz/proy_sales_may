@@ -5,7 +5,7 @@
         <p>¿Estás seguro de que deseas eliminar la marca <strong>{{ brand.description }}</strong>?</p>
         <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn red">Eliminar</button>
+            <button type="submit" class="btn red" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
             <a class="btn blue" href="{% url 'core:brand_list' %}">Cancelar</a>
         </form>
     </div>
