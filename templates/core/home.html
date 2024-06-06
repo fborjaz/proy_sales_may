@@ -2,43 +2,55 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container mx-auto">
   {% if user.is_authenticated %}
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Super Mercado Económico</h1>
-            <p>Tu mejor opción para encontrar productos frescos, de calidad y a precios accesibles.</p>
-            <a href="{% url 'core:product_list' %}" class="btn btn-primary">Ver Productos</a>
+    <section class="hero py-12 px-4 md:px-8 lg:py-24 lg:px-16 xl:px-24">
+      <div class="hero-content flex flex-col md:flex-row items-center justify-between">
+        <div class="text-center md:text-left">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Super Mercado Económico</h1>
+          <p class="text-lg md:text-xl text-gray-300 mb-8">Tu mejor opción para encontrar productos frescos, de calidad y a precios accesibles.</p>
+          <a href="{% url 'core:product_list' %}" class="bg-accent hover:bg-green-600 text-primary font-bold py-2 px-4 rounded transition duration-300">
+            Ver Productos
+          </a>
         </div>
-        <div class="hero-image">
-            <img src="{% static 'media/products/Switch.png' %}" alt="Imagen de productos frescos">
+        <div class="hero-image mt-8 md:mt-0">
+          <img src="{% static 'media/products/Switch.png' %}" alt="Imagen de productos frescos" class="w-full md:w-auto rounded-lg shadow-lg">
         </div>
+      </div>
     </section>
 
-    <section class="featured-products">
-        <h2>Productos Destacados</h2>
-        <div class="product-grid">
-            {% for product in products %}
-                <div class="product-card">
-                    <img src="{{ product.image.url }}" alt="{{ product.description }}">
-                    <h3>{{ product.name }}</h3>
-                    <p>${{ product.price }}</p>
-                    <a href="{% url 'core:product_detail' product.pk %}" class="btn btn-secondary">Ver Detalles</a>
-                </div>
-            {% endfor %}
-        </div>
+    <section class="featured-products py-8 px-4 md:px-8 lg:py-16 lg:px-16 xl:px-24">
+      <h2 class="text-3xl font-bold text-white text-center mb-8">Productos Destacados</h2>
+      <div class="product-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for product in products %}
+          <div class="product-card bg-secondary rounded-lg overflow-hidden shadow-md">
+            <img src="{{ product.image.url }}" alt="{{ product.description }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="text-xl font-semibold text-white mb-2">{{ product.name }}</h3>
+              <p class="text-gray-300 mb-4">${{ product.price }}</p>
+              <a href="{% url 'core:product_detail' product.pk %}" class="bg-accent hover:bg-green-600 text-primary font-bold py-2 px-4 rounded transition duration-300">
+                Ver Detalles
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </section>
 
-    <section class="about-us">
-        <h2>Sobre Nosotros</h2>
-        <p>Somos un supermercado comprometido con ofrecer productos de calidad a precios justos. Nuestra misión es ser la primera opción para las familias ecuatorianas que buscan ahorrar sin sacrificar la calidad.</p>
-        <p>Visítanos en nuestra tienda ubicada en [Dirección de tu supermercado].</p>
-        <p>Horario de atención: [Horario de atención del supermercado]</p>
+    <section class="about-us py-8 px-4 md:px-8 lg:py-16 lg:px-16 xl:px-24 bg-secondary rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-white text-center mb-4">Sobre Nosotros</h2>
+      <p class="text-gray-300 text-center mb-8">Somos un supermercado comprometido con ofrecer productos de calidad a precios justos. Nuestra misión es ser la primera opción para las familias ecuatorianas que buscan ahorrar sin sacrificar la calidad.</p>
     </section>
   {% else %}
-    <section class="welcome">
-        <h2>¡Bienvenido a Super Mercado Económico!</h2>
-        <p>Por favor, inicia sesión o regístrate para acceder a nuestros productos y servicios.</p>
+    <section class="welcome py-12 px-4 md:px-8 lg:py-24 lg:px-16 xl:px-24">
+      <div class="flex flex-col items-center justify-center">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">¡Bienvenido a Super Mercado Económico!</h2>
+        <p class="text-lg md:text-xl text-gray-300 mb-8">Por favor, inicia sesión o regístrate para acceder a nuestros productos y servicios.</p>
+        <div class="button-group flex space-x-4">
+          <a href="{% url 'signin' %}" class="bg-accent hover:bg-green-600 text-primary font-bold py-2 px-4 rounded transition duration-300">Iniciar Sesión</a>
+          <a href="{% url 'signup' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300">Registrarse</a>
+        </div>
+      </div>
     </section>
   {% endif %}
 </div>
